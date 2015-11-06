@@ -1,0 +1,56 @@
+<project>
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>net.techcable</groupId>
+        <artifactId>parent</artifactId>
+        <version>1.0.9</version>
+    </parent>
+    <artifactId>jdiff</artifactId>
+    <version>1.0.0</version>
+    <name>JDiff</name>
+    <properties>
+        <java.version>1.8</java.version>
+        <licence.id>MIT</licence.id>
+        <mainClass>net.techcable.jdiff.cmd.JDiff</mainClass>
+    </properties>
+
+    <dependencies>
+        <!-- Diff Library -->
+        <dependency>
+            <groupId>com.googlecode.java-diff-utils</groupId>
+            <artifactId>diffutils</artifactId>
+            <version>1.3.0</version>
+        </dependency>
+        <!-- Helper Libraries -->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>18.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.4</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <finalName>${project.name}</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <configuration>
+                    <minimizeJar>true</minimizeJar>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <repositories>
+        <repository>
+            <id>techcable-repo</id>
+            <url>http://repo.techcable.net/content/groups/public/</url>
+        </repository>
+    </repositories>
+</project>
