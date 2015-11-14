@@ -23,9 +23,9 @@ public class DiffTask {
     public void run() throws IOException {
         List<String> originalLines = FileHelper.readLines(originalFile, UTF_8);
         List<String> modifiedLines = FileHelper.readLines(modifiedFile, UTF_8);
-        Patch diff = DiffUtils.diff(originalLines, modifiedLines, new FixedMyers<>());
+        Patch<String> diff = DiffUtils.diff(originalLines, modifiedLines, new FixedMyers<>());
         if (diff.getDeltas().isEmpty()) return;
-        List<String> diffLines = DiffUtils.generateUnifiedDiff(originalFile.getPath(), modifiedFile.getPath(), originalLines, diff, CONTEXT_SIZE);
+        List<String> diffLines = DiffUtils.generateUnifiedDiff(FileHelper.getNormalizedPath(originalFile), FileHelper.getNormalizedPath(modifiedFile), originalLines, diff, CONTEXT_SIZE);
         if (Thread.interrupted()) return;
         fileWriter.writeLines(outputFile, diffLines, UTF_8);
     }

@@ -84,5 +84,38 @@ public class FileHelper {
         }
     }
 
-}
+    public static String getNormalizedPath(File f) {
+        return normalizeEndings(f.getPath());
+    }
 
+    private static final Pattern DRIVE_PATTERN = Pattern.compile("([A-Z]):");
+    private static final Pattern SLASH_PATTERN = Pattern.compile("[\\\\/]");
+
+    public static String normalizeEndings(String path) {
+        boolean windowsStyle = Boolean.parseBoolean(System.getProperty("useWindowsEndings", "false"));
+        Matcher m;
+        StringBuffer pathBuilder = new StringBuffer();
+        if (!windowsStyle) {
+            m = DRIVE_PATTERN.matcher(path);
+
+            if (m.lookingAt()) {
+                m.appendReplacement(pathBuilder, "");
+            }
+            m.usePattern(SLASH_PATTERN);
+        } else {
+            m = SLASH_PATTERN.matcher(path);
+
+            if (m.lookingAt()) {
+                m.appendReplacement(pathBuilder, "C:\\");
+            }
+        }
+
+        while (m.find()) {
+            m.appendReplacement(pathBuilder, windowsStyle ? "\\\\" : "/");
+        }
+
+        m.appendTail(pathBuilder);
+        return pathBuilder.toString();
+    }
+
+}
