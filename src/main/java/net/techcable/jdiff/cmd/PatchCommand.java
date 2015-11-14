@@ -79,7 +79,7 @@ public class PatchCommand implements Command {
             } catch (IOException e) {
                 error(e);
             } catch (PatchFailedException e) {
-                error("Error patching file", e.getMessage());
+                error("Error patching file " + outputFile.getPath(), e.getMessage());
             }
             fileCount.incrementAndGet();
         });
